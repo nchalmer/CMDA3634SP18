@@ -30,14 +30,12 @@ void main() {
 
   array = (int *) malloc(10*sizeof(int));
 
-  printf("a[0] = %d\n", array[0]); 
-  printf("a[1] = %d\n", array[1]); 
-  printf("a[2] = %d\n", array[2]); 
-  printf("a[3] = %d\n", array[3]); 
-  printf("a[4] = %d\n", array[4]); 
-  printf("a[5] = %d\n", array[5]); 
-  printf("a[6] = %d\n", array[6]); 
-  printf("a[7] = %d\n", array[7]); 
-  printf("a[8] = %d\n", array[8]); 
-  printf("a[9] = %d\n", array[9]); 
+  for (int n=0;n<10;n++) {
+    array[n] = n;
+  } 
+
+  for (int n=0;n<10;n++) {
+    printf("a[%d] = %d\n",n, array[n]); 
+  }
+
 }

@@ -1,15 +1,19 @@
 #include <stdio.h> 
 #include <stdlib.h>
-
+#include <string.h>
 
 void myPrintf(char*); //function stub
 
 
 
 void main() {
-  
+ 
+  char string[20];
+
+  strcpy(string,"Hello World!");
+ 
   //call my own print function
-  myPrintf("Hello World!");
+  myPrintf(string);
 
 }
 
