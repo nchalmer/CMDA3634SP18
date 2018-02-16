@@ -63,8 +63,11 @@ unsigned int isProbablyPrime(unsigned int N) {
   }
 
   //if we're testing a large number switch to Miller-Rabin primality test
+  /* Q2.1: Complete this part of the isProbablyPrime function using the Miller-Rabin pseudo-code */
+  unsigned int r,d;
+
   for (unsigned int n=0;n<NsmallPrimes;n++) {
-    /* Q2.1: Complete this part of the isProbablyPrime fucntion using the Miller-Rabin pseudo-code */
+  
   }
   return 1; //true
 }
