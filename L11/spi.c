@@ -5,8 +5,8 @@
 int main(int argc, char **argv) {
 
   //need running tallies
-  long long int Ntotal;
-  long long int Ncircle;
+  long long int Ntotal=0;
+  long long int Ncircle=0;
 
   //seed random number generator
   double seed = 1.0;
