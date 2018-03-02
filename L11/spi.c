@@ -20,7 +20,7 @@ int main(int argc, char **argv) {
   double seed = rank;
   srand48(seed);
 
-  long long int Ntrials = 10000000/size;
+  long long int Ntrials = 10000000;
 
   MPI_Barrier(MPI_COMM_WORLD);
   double startTime = MPI_Wtime();
@@ -47,8 +47,10 @@ int main(int argc, char **argv) {
   MPI_Barrier(MPI_COMM_WORLD);
   double endTime = MPI_Wtime();  
 
+  long long int totalWork = size*Ntrials;
+
   if (rank==0) 
-    printf("Our estimate of pi is %f, the runtime was %g \n", pi, endTime-startTime);
+    printf("Our estimate of pi is %f, the runtime was %g, our 'throughput' was %g \n", pi, endTime-startTime, totalWork/(endTime-startTime));
   
   MPI_Finalize();
 
