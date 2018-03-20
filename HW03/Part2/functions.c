@@ -118,3 +118,28 @@ unsigned int findGenerator(unsigned int p) {
   
   return g;
 }
+
+void setupElGamal(unsigned int n, unsigned int *p, unsigned int *g, 
+                                  unsigned int *h, unsigned int *x) {
+
+  /* Setup an ElGamal cryptographic system */
+  
+  printf("ElGamal Setup successful.\n");
+  printf("p = %u. \n", *p);  
+  printf("g = %u is a generator of Z_%u \n", *g, *p);  
+  printf("Secret key: x = %u \n", *x);
+  printf("h = g^x = %u\n", *h);
+  printf("\n");
+}
+
+void ElGamalEncrypt(unsigned int *m, unsigned int *a, 
+                    unsigned int p, unsigned int g, unsigned int h) {
+
+  /* implement the encryption routine for an ElGamal cryptographic system */
+}
+
+void ElGamalDecrypt(unsigned int *m, unsigned int a, 
+                    unsigned int p, unsigned int x) {
+
+  /* implement the decryption routine for an ElGamal cryptographic system */
+}
