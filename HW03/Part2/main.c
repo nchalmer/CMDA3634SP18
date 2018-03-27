@@ -59,7 +59,7 @@ int main (int argc, char **argv) {
   //loop through the values from 'start' to 'end'
   for (unsigned int i=start;i<end;i++) {
     if (modExp(g,i+1,p)==h)
-      printf("Secret key found! x = %u \n", i);
+      printf("Secret key found! x = %u \n", i+1);
   }
 
   MPI_Finalize();
