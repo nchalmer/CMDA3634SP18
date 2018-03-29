@@ -52,8 +52,13 @@ int main(int argc, char **argv) {
   double hostEnd = clock();
   double hostTime = (hostEnd - hostStart)/(double) CLOCKS_PER_SEC;
 
-  printf("The host took %f seconds to add a and b \n", hostTime);
+  size_t inputMem = 2*N*sizeof(double); //number of bytes the operation inputs
+  size_t outMem   = 1*N*sizeof(double); //number of bytes the operation outputs
 
+  size_t totalMem = (inputMem+outMem);
+
+  printf("The host took %f seconds to add a and b \n", hostTime);
+  printf("The efective bandwidth of the host was: %f GB/s\n", totalMem/(1E9*hostTime));
   
   //Device arrays
   double *d_a, *d_b, *d_c;
@@ -73,6 +78,7 @@ int main(int argc, char **argv) {
   double copyTime = (copyEnd-copyStart)/(double)CLOCKS_PER_SEC;
 
   printf("It took %f seconds to copy the data to device. \n",copyTime);
+  printf("The efective bandwidth of the copy was: %f GB/s\n", inputMem/(1E9*copyTime));
 
   //at this point the data is allocated and populated on the device
 
@@ -88,8 +94,8 @@ int main(int argc, char **argv) {
   double deviceEnd = clock();
   double deviceTime = (deviceEnd-deviceStart)/(double) CLOCKS_PER_SEC;
 
-  printf("The device took %f seconds to add a and b \n", deviceTime);
-
+  printf("The device took %f seconds to add a and b \n", deviceTime); 
+  printf("The efective bandwidth of the device was: %f GB/s\n", totalMem/(1E9*deviceTime));
   printf("The device was %f times faster\n", hostTime/deviceTime);
 
   copyStart = clock();
@@ -98,6 +104,7 @@ int main(int argc, char **argv) {
   copyTime = (copyEnd-copyStart)/(double) CLOCKS_PER_SEC;
 
   printf("It took %f seconds to copy the data back to the host. \n",copyTime);
+  printf("The efective bandwidth of the copy was: %f GB/s\n", outMem/(1E9*copyTime));
 
   cudaFree(d_a);
   cudaFree(d_b);
