@@ -1,9 +1,9 @@
 #! /bin/bash
 #
 #PBS -l walltime=00:10:00
-#PBS -l nodes=1:ppn=16
+#PBS -l nodes=1:ppn=1:gpus=1
 #PBS -W group_list=newriver
-#PBS -q open_q
+#PBS -q p100_normal_q
 #PBS -j oe
 
 #cd $PBS_O_WORKDIR
