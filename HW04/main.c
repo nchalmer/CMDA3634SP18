@@ -29,7 +29,7 @@ int main (int argc, char **argv) {
   char status = scanf("%u",&n);
 
   //make sure the input makes sense
-  if ((n<8)||(n>31)) {//Updated bounds. 8 is no good (need to encode chars)
+  if ((n<9)||(n>31)) {//Updated bounds. 8 is no good (need to encode chars)
   	printf("Unsupported bit size.\n");
 		return 0;  	
   }
