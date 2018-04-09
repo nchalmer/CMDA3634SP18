@@ -13,7 +13,7 @@
 
 make
 
-for ((Nthreads=1;Nthreads<=64;Nthreads+=4))
+for ((Nthreads=1;Nthreads<=32;Nthreads*=2))
 do 
     echo Nthreads=$Nthreads
     ./mandelbrot 4096 4096 $Nthreads;
