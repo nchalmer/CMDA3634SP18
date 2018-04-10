@@ -29,7 +29,7 @@ int main (int argc, char **argv) {
   char status = scanf("%u",&n);
 
   //make sure the input makes sense
-  if ((n<8)||(n>31)) {//Updated bounds. 8 is no good (need to encode chars)
+  if ((n<9)||(n>31)) {//Updated bounds. 8 is no good (need to encode chars)
   	printf("Unsupported bit size.\n");
 		return 0;  	
   }
@@ -90,7 +90,7 @@ int main (int argc, char **argv) {
   double startTime = omp_get_wtime();
   for (unsigned int i=0;i<p-1;i++) {
     if (modExp(g,i+1,p)==h) {
-      printf("Secret key found! x = %u \n", i);
+      printf("Secret key found! x = %u \n", i+1);
     } 
   }
   double endTime = omp_get_wtime();
