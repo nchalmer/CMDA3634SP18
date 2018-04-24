@@ -4,20 +4,26 @@
 
 #include "cuda.h"
 
-__global__ void reduction(const int N, float *a, float *result) {
+__global__ void reduction(const int N, 
+                          const float * __restrict__ a, 
+                                float * __restrict__ result) {
 
   int thread = threadIdx.x;
   int block  = blockIdx.x;
   int blockSize = blockDim.x;
+  int gridSize  = gridDim.x;
 
   //unique global thread ID
   int id = thread + block*blockSize;
 
-  __shared__ float s_sum[256];
+  __volatile__ __shared__ float s_sum[256];
 
   float sum = 0;
-  if (id<N) 
-    sum = a[id]; //add the thread's id to start
+  for (int i=0;i<4;i++){
+    if (id+i*blockSize*gridSize <N) {
+      sum += a[id+i*blockSize*gridSize]; //add the thread's id to start
+    }  
+  }
   
   s_sum[thread] = sum;
   
@@ -40,31 +46,31 @@ __global__ void reduction(const int N, float *a, float *result) {
     s_sum[thread] += s_sum[thread+32]; 
   }
   
-  __syncthreads(); //make sure the write to shared is finished
+  //__syncthreads(); //make sure the write to shared is finished
 
   if (thread<16) {//next half
     s_sum[thread] += s_sum[thread+16]; 
   }
   
-  __syncthreads(); //make sure the write to shared is finished
+  //__syncthreads(); //make sure the write to shared is finished
 
   if (thread<8) {//next half
    s_sum[thread] += s_sum[thread+8]; 
   }
   
-  __syncthreads(); //make sure the write to shared is finished
+  //__syncthreads(); //make sure the write to shared is finished
 
   if (thread<4) {//next half
    s_sum[thread] += s_sum[thread+4]; 
   }
   
-  __syncthreads(); //make sure the write to shared is finished
+  //__syncthreads(); //make sure the write to shared is finished
 
   if (thread<2) {//next half
    s_sum[thread] += s_sum[thread+2]; 
   }
   
-  __syncthreads(); //make sure the write to shared is finished
+  //__syncthreads(); //make sure the write to shared is finished
 
   if (thread<1) {//final piece
     s_sum[thread] += s_sum[thread+1];
@@ -111,7 +117,7 @@ int main (int argc, char **argv) {
   
   do {
  
-    Nnew = (N+256-1)/256;
+    Nnew = (N+4*256-1)/(4*256);
 
     //block dimensions
     dim3 B(256,1,1);
